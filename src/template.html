@@ -8,28 +8,35 @@
 <body>
     <header>
         <div id="heading-banner">
-            <h1>ToDo List</h1>
+            <div id="todo-header">
+                <h1>ToDo List</h1>
+            </div>
         </div>
     </header>
     <main>
-        <section id="nav-pane-left">
-            <h4>Today</h4>
-            <h4>Favourites</h4>
-            <div id="projects">
-                <div id="project-header">
+        <section id="nav-pane">
+            <div id="today-header" class="nav-header">
+                <h4>Today</h4>
+            </div>
+            <div id="favorites">
+                <div id="favorites-header" class="nav-header expandable">
+                    <h4>Favorites</h4>
+                </div>
+                <div id="favorite-list" >
+                    <ul></ul>
+                </div>
+            </div>
+            <div id="lists">
+                <div id="lists-header" class="nav-header expandable">
                     <h4>Projects</h4>
                 </div>
-                <div id="project-list">
+                <div id="list">
                     <ul></ul>
                 </div>
             </div>
         </section>
         <section id="content">
-            <a id="new-task" href="">
-                <div id="new-task-div">
-                    <p>New Task</p>
-                </div>
-            </a>
+            <button id="new-task">New Task</button>
         </section>
     </main>
     <footer></footer>
