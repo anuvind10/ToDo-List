@@ -4,8 +4,8 @@
 
 /* Remove default margin */
 * {
-    font-family: 'Baloo2', 'sans-serif', 'Roboto';
     margin: 0;
+    color: var(--font-color);
 }
 
 @font-face {
@@ -34,108 +34,77 @@ body {
     background-color: var(--bg-color);
     margin: 0;
     padding: 0;
-    color: white;
 }
 
-#nav-pane {
+#sidebar {
+    width: 15vw;
     height: 100vh;
-    width: 15%;
-    position: fixed;
-    top: 0;
-    left: 0;
+    border-right: 1px solid #696969;
+    padding-top: 50px;
     display: flex;
     flex-direction: column;
-    text-align: left;
-    padding-top: 50px;
-    margin-top: 100px;
-    border-right: 1px solid #ffffff3b;
+    gap: 40px;
 }
 
-h4, ul {
-    font-family: "baloo2";
-}
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    border-bottom: 1px solid #ffffff3b;
+#sidebar > ul {
     display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#logo-div {
+    width: 100%;
+    display: flex;
+    gap: 20px;
     align-items: center;
-    padding: 0 40px;
-}
-
-main {
-    margin-top: 100px;
-    height: calc(100vh - 100px);
-}
-
-#heading-banner {
-    font-family: "Baloo2";
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-
-#todo-header {
-    font-size: 20px;
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.logo {
-    width: 60px;
-    height: 60px;
-}
-
-#content {
-    margin-left: 15%;
-}
-
-#new-task {
-    position: relative;
-    top:  20px;
-    left: 92%;
-    width: 100px;
-    padding: 5px;
-    background-color: #ffffff;
-    text-align: center;
-    border: none;
-    border-radius: 10px;
-}
-
-#new-task:hover {
-    cursor: pointer;
-    color: white;
-    background-color: var(--bg-color-light);
-}
-
-.nav-header {
-    width: 100%;
+    padding-left: 40px;
+    font-family: 'Baloo2';
     font-size: 16px;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    padding: 8px 40px;
-    border-radius: 5px;
 }
 
-.nav-header:hover {
-    background-color: var(--bg-color-light);
-    cursor: pointer;
+#logo-icon {
+    width: 48px;
 }
 
-.nav-icon {
-    max-height: 20px;
+.icon {
     max-width: 20px;
-    padding: 3px;
-    border-radius: 5px;
 }
 
-#add-icon {
-    position: relative;
-    left: 100px;
+ul {
+    list-style-type: none;
+    width: 100%;
+    padding: 0%;
+}
+
+.list-item {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+}
+
+.list-item > a {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    text-decoration: none;
+    font-family: "Poppins";
+    font-size: 16px;
+}
+
+.dropdown-btn {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: "Poppins";
+    font-size: 16px;
+    padding: 0%;
+}
+
+.dropdown-btn:hover {
+    background-color: var(--bg-color-light);
 }

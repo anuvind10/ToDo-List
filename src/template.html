@@ -6,40 +6,44 @@
     <title>ToDo-List</title>
 </head>
 <body>
-    <header>
-        <div id="heading-banner">
-            <div id="todo-header">
-                <div id="todo-logo" class="logo"></div>
-                <h1>ToDo List</h1>
-            </div>
-            <div id="user-logo" class="logo"></div>
+    <nav id="sidebar">
+        <div id="logo-div">
+            <img src="" alt="logo" id="logo-icon">
+            <h1>ToDo Lists</h1>
         </div>
-    </header>
+        <ul>
+            <li class="active list-item">
+                <a href="#">
+                    <img id="home-icon" src="" alt="home icon" class="icon">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="list-item">
+                <a href="#">
+                    <img id="today-icon" src="" alt="today icon" class="icon">
+                    <span>Today</span>
+                </a>
+            </li>
+            <li class="list-item">
+                <button class="dropdown-btn">
+                    <img id="favorites-icon" src="" alt="favorites icon" class="icon">
+                    <span>Favorites</span>
+                    <img id="favorites-expand-icon" src="" alt="expand icon" class="icon">
+                </button>
+                <ul id="favourite-list" class="sub-list"></ul>
+            </li>
+            <li class="list-item">
+                <button class="dropdown-btn">
+                    <img id="projects-icon" src="" alt="projects icon" class="icon">
+                    <span>Projects</span>
+                    <img id="projects-expand-icon" src="" alt="expand icon" class="icon">
+                </button>
+                <ul id="project-list" class="sub-list"></ul>
+            </li>
+        </ul>
+    </nav>
     <main>
-        <section id="nav-pane">
-            <div id="today-header" class="nav-header">
-                <h4>Today</h4>
-            </div>
-            <div id="favorites" class="expandable">
-                <div id="favorites-header" class="nav-header">
-                    <h4>Favorites</h4>
-                </div>
-                <div id="favorite-list" >
-                    <ul></ul>
-                </div>
-            </div>
-            <div id="lists" class="expandable">
-                <div id="lists-header" class="nav-header">
-                    <h4>Projects</h4>
-                </div>
-                <div>
-                    <ul id="list"></ul>
-                </div>
-            </div>
-        </section>
-        <section id="content">
-            <button id="new-task">New Task</button>
-        </section>
+
     </main>
     <footer></footer>
 </body>
