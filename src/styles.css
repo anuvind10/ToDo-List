@@ -53,22 +53,32 @@ body {
     list-style: none;
     display: flex;
     flex-direction: column;
+    gap: 1em;
     width: 100%;
     font-family: "Poppins";
     font-size: 16px;
     padding: 0;
 }
 
-.list-item > a, 
-.list-item > button {
+.list-item > a,
+.list-item > button  {
     width: 100%;
-    padding: 1em 0 1em 3em;
+    padding: 0.5em 0 0.5em 3em;
 }
 
 .list-item > a:hover, 
 .list-item > button:hover {
     background-color: var(--bg-color-light);
     border-radius: 10px;
+}
+
+.list-item > button:hover {
+    > #add-project-icon {
+        position: relative;
+        left: 3em;
+        opacity: 1;
+        transition: 0.3s ease-in-out;
+    }
 }
 
 #sidebar a, 
@@ -113,8 +123,8 @@ body {
 }
 
 .sub-list {
-    padding-left: 6em;
-    font-size: 16px;
+    margin-top: 10px;
+    padding-left: 5.5em;
     list-style: none;
     display: grid;
     grid-template-rows: 0fr;
@@ -129,5 +139,7 @@ body {
     grid-template-rows: 1fr;
 }
 
-.sub-list>li {
+#add-project-icon {
+    opacity: 0;
 }
+

@@ -3,7 +3,6 @@
 import calendar_icon from "./images/calendar_icon.png";
 import favorites_icon from "./images/favorites_icon.png";
 import projects_icon from "./images/projects_icon.png";
-import user_icon from "./images/user.png";
 import todo_icon from "./images/todolist_icon.png";
 import add_icon from "./images/add.png";
 import home_icon from "./images/home_icon.png";
@@ -18,7 +17,8 @@ export function renderIcons() {
         { name: "projects", icon: projects_icon, type: "nav" },
         { name: "favorites-expand", icon: expand_icon, type: "nav" },
         { name: "projects-expand", icon: expand_icon, type: "nav" },
-        { name: "logo", icon: todo_icon, type: "nav" }
+        { name: "logo", icon: todo_icon, type: "nav" },
+        { name: "add-project", icon: add_icon, type: "nav" }
     ];
 
     elements.forEach(element => {
@@ -27,10 +27,21 @@ export function renderIcons() {
     });
 }
 
-export function expandHeader() {
-    return console.log("Header expanded");
+export function toggleHeader() {
+    const elementToExpand = this.lastElementChild;
+    const icon = document.querySelector(`#${this.id}-expand-icon`);
+
+    if (elementToExpand.classList.contains("show")) {
+        elementToExpand.classList.remove("show");
+        icon.src = expand_icon;
+    }
+    else {
+        elementToExpand.classList.add("show");
+        icon.src = collapse_icon;
+    }
+
 }
 
-// export function renderNewList() {
-    
-// }
+export function renderNewList() {
+    return
+}
