@@ -6,6 +6,7 @@
     <title>ToDo-List</title>
 </head>
 <body>
+    <div id="overlay"></div>
     <nav id="sidebar">
         <div id="logo-div">
             <img src="" alt="logo" id="logo-icon">
@@ -24,39 +25,36 @@
                     <span>Today</span>
                 </a>
             </li>
-            <li id="favourites" class="list-item expandable">
-                <button class="dropdown-btn">
-                    <img id="favorites-icon" src="" alt="favorites icon" class="icon">
-                    <span>Favorites</span>
-                    <img id="favorites-expand-icon" src="" alt="expand icon" class="icon">
+            <li id="favourites" class="list-item">
+                <button id="favourites-dropdown-btn" class="dropdown-btn expandable">
+                    <img id="favourites-icon" src="" alt="favorites icon" class="icon">
+                    <span>Favourites</span>
+                    <img id="favourites-expand-icon" src="" alt="expand icon" class="icon">
                 </button>
-                <ul id="favourite-list" class="sub-list">
+                <ul id="favourites-list" class="sub-list">
                     <div>
-                        <li>test</li>
-                        <li>test</li>
-                        <li>test</li>
                     </div>
                 </ul>
             </li>
-            <li id="projects" class="list-item expandable">
-                <button class="dropdown-btn">
+            <li id="projects" class="list-item">    
+                <button id="projects-dropdown-btn" class="dropdown-btn expandable">
                     <img id="projects-icon" src="" alt="projects icon" class="icon">
                     <span>Projects</span>
                     <img id="projects-expand-icon" src="" alt="expand icon" class="icon">
                     <img src="" alt="add new project" id="add-project-icon" class="icon">
                 </button>
-                <ul id="project-list" class="sub-list">
-                    <div>
-                        <li>test</li>
-                        <li>test</li>
-                        <li>test</li>
-                    </div>
+                <ul id="projects-list" class="sub-list">
+                    <div></div>
                 </ul>
             </li>
         </ul>
     </nav>
     <main>
-
+        <div id="projectModal" class="modal">
+            <h1>Add Project</h1>
+            <input id="project-name" type="text" placeholder="Project name" required>
+            <button id="add-project-btn">Add</button>
+        </div>
     </main>
     <footer></footer>
 </body>

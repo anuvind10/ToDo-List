@@ -13,9 +13,9 @@ export function renderIcons() {
     const elements = [
         { name: "home", icon: home_icon, type: "nav" },
         { name: "today", icon: calendar_icon, type: "nav" },
-        { name: "favorites", icon: favorites_icon, type: "nav" },
+        { name: "favourites", icon: favorites_icon, type: "nav" },
         { name: "projects", icon: projects_icon, type: "nav" },
-        { name: "favorites-expand", icon: expand_icon, type: "nav" },
+        { name: "favourites-expand", icon: expand_icon, type: "nav" },
         { name: "projects-expand", icon: expand_icon, type: "nav" },
         { name: "logo", icon: todo_icon, type: "nav" },
         { name: "add-project", icon: add_icon, type: "nav" }
@@ -28,8 +28,9 @@ export function renderIcons() {
 }
 
 export function toggleHeader() {
-    const elementToExpand = this.lastElementChild;
-    const icon = document.querySelector(`#${this.id}-expand-icon`);
+    const element = this.id.split('-')[0]
+    const elementToExpand = document.querySelector(`#${element}-list`);
+    const icon = document.querySelector(`#${element}-expand-icon`);
 
     if (elementToExpand.classList.contains("show")) {
         elementToExpand.classList.remove("show");

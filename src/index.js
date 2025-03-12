@@ -2,11 +2,11 @@ import "./styles.css";
 
 import attachListeners from "./eventListeners";
 import { addTask } from "./tasks";
-import * as renderPage from "./renderPage";
+import * as updateDisplay from "./display";
 
 
 function pageLoad() {
-    renderPage.renderIcons();
+    updateDisplay.renderIcons();
     attachListeners();
 }
 
