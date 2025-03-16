@@ -6,9 +6,13 @@ export default function attachListeners() {
      const addProjectBtn = document.querySelector("#add-project-icon");
 
      expandableHeaders.forEach(header => {
-        header.addEventListener("click", toggleHeader)
+         header.addEventListener("click", (event) => {
+            toggleHeader(event.target)
+         })
      });
 
-
-     addProjectBtn.addEventListener("click", addProject)
+     addProjectBtn.addEventListener("click", (event) => {
+         addProject();
+         event.stopPropagation();
+     })
 }

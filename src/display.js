@@ -27,10 +27,10 @@ export function renderIcons() {
     });
 }
 
-export function toggleHeader() {
-    const element = this.id.split('-')[0]
-    const elementToExpand = document.querySelector(`#${element}-list`);
-    const icon = document.querySelector(`#${element}-expand-icon`);
+export function toggleHeader(element) {
+    const toggleElement = element.id.split('-')[0]
+    const elementToExpand = document.querySelector(`#${toggleElement}-list`);
+    const icon = document.querySelector(`#${toggleElement}-expand-icon`);
 
     if (elementToExpand.classList.contains("show")) {
         elementToExpand.classList.remove("show");
@@ -40,7 +40,6 @@ export function toggleHeader() {
         elementToExpand.classList.add("show");
         icon.src = collapse_icon;
     }
-
 }
 
 export function renderNewList() {

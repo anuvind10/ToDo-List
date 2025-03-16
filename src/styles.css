@@ -192,14 +192,15 @@ input[type="text"] {
     padding: 15px;
 }
 
-#add-project-btn {
+#projectModal div button {
+    width: 100px;
     background-color: var(--theme-color);
     padding: 10px 20px;
     border: none;
     border-radius: 10px;
 }
 
-#add-project-btn:hover {
+#projectModal div button:hover {
     background-color: var(--theme-color-light);
 }
 
@@ -215,3 +216,4 @@ input[type="text"] {
     background: rgba(0, 0, 0, 0.85);
     z-index: 2;
 }
+    
