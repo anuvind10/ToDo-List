@@ -143,4 +143,8 @@ export function removeProject() {
             favouritesList.firstElementChild.removeChild(node);
         }   
     });
+
+    if (projectLists.firstElementChild.childElementCount === 0) {
+        toggleHeader(projectLists.previousElementSibling);
+    }
 }
