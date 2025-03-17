@@ -100,7 +100,7 @@ export function addToFavorites(project) {
     favouritesList.firstElementChild.appendChild(newFavourite);
 
     if (!favouritesList.classList.contains("show")) {
-        toggleHeader(favouritesList)
+        toggleHeader(favouritesList.previousElementSibling)
     }
 }
 
@@ -109,4 +109,8 @@ export function removeFromFavorites(project) {
     const projectToRemove = document.querySelector(`#${project.id}`);
 
     favouritesList.firstElementChild.removeChild(projectToRemove);
+
+    if (favouritesList.firstElementChild.childElementCount === 0) {
+        toggleHeader(favouritesList.previousElementSibling);   
+    }
 }
