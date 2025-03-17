@@ -28,6 +28,7 @@
     --bg-color: #05030e;
     --theme-color: #41229e;
     --theme-color-light: #613ad6;
+    --theme-color-light: #6b40ec;
     --text-bg-color: #424242;
 }
 
@@ -71,6 +72,11 @@ body {
 .list-item > button:hover {
     background-color: var(--theme-color);
     border-radius: 10px;
+}
+
+
+#add-project-icon {
+    opacity: 0;
 }
 
 .list-item > button:hover {
@@ -144,9 +150,7 @@ body {
     grid-template-rows: 1fr;
 }
 
-#add-project-icon {
-    opacity: 0;
-}
+
 
 input {
     background-color: white;
@@ -217,3 +221,22 @@ input[type="text"] {
     z-index: 2;
 }
     
+.project {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 30px;
+}
+
+.project > img {
+    max-height: 16px;
+    opacity: 0;
+}
+
+.project:hover {
+    > img {
+        opacity: 1;
+        transition: 0.3s ease-in-out;
+    }
+}
+
