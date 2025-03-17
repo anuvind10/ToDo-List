@@ -9,7 +9,8 @@ import home_icon from "./images/home_icon.png";
 import expand_icon from "./images/expand_icon.png";
 import collapse_icon from "./images/collapse_icon.png";
 import addFavouritesIcon from "./images/favourites_add_icon.png";
-import favouritesAddedIcon from "./images/favourites_added_icon.png"
+import favouritesAddedIcon from "./images/favourites_added_icon.png";
+import remove_icon from "./images/close_icon.png";
 
 export function renderIcons() {
     const elements = [
@@ -63,31 +64,46 @@ export function buildProjectList(projects) {
         idCounter++;
 
         const div = document.createElement('div');
-        const img = document.createElement('img');
+        const favouriteIcon = document.createElement('img');
+        const removeIcon = document.createElement('img');
 
         div.classList.add("project");
-        img.classList.add('icon');
-        img.classList.add('add-fav-icon');
-        img.src = addFavouritesIcon;
+        favouriteIcon.classList.add('icon');
+        favouriteIcon.classList.add('add-fav-icon');
+        favouritesList.firstElementChild.childNodes.forEach(node => {
+            if (node.id === newProject.id) {
+                favouriteIcon.src = favouritesAddedIcon;
+            }   
+            else {
+                favouriteIcon.src = addFavouritesIcon;
+            }
+        });
+
+        removeIcon.classList.add('icon');
+        removeIcon.classList.add('remove-icon');
+        removeIcon.src = remove_icon;
         
         div.appendChild(newProject);
-        div.appendChild(img);
-    
+        div.appendChild(favouriteIcon);
+        div.appendChild(removeIcon);
+
         projectLists.firstElementChild.appendChild(div);
 
         if (!projectLists.classList.contains('show'))
             toggleHeader(projectHeader);
 
-        img.addEventListener('click', (event) => {
-            if (img.src === addFavouritesIcon) {
-                img.src = favouritesAddedIcon;
+        favouriteIcon.addEventListener('click', (event) => {
+            if (favouriteIcon.src === addFavouritesIcon) {
+                favouriteIcon.src = favouritesAddedIcon;
                 addToFavorites(event.target.previousElementSibling);
             }
             else {
-                img.src = addFavouritesIcon;
+                favouriteIcon.src = addFavouritesIcon;
                 removeFromFavorites(event.target.previousElementSibling);
             }
         })
+
+        removeIcon.addEventListener('click', removeProject)
     });
 }
 
@@ -113,4 +129,18 @@ export function removeFromFavorites(project) {
     if (favouritesList.firstElementChild.childElementCount === 0) {
         toggleHeader(favouritesList.previousElementSibling);   
     }
+}
+
+export function removeProject() {
+    const projectLists = document.querySelector("#projects-list");
+    const favouritesList = document.querySelector("#favourites-list");
+    const toRemove = this.parentElement;
+    const project = this.parentElement.firstElementChild;
+
+    projectLists.firstElementChild.removeChild(toRemove);
+    favouritesList.firstElementChild.childNodes.forEach(node => {
+        if (node.id === project.id) {
+            favouritesList.firstElementChild.removeChild(node);
+        }   
+    });
 }
