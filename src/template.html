@@ -6,59 +6,62 @@
     <title>ToDo-List</title>
 </head>
 <body>
-    <div id="overlay"></div>
-    <nav id="sidebar">
-        <div id="logo-div">
-            <img src="" alt="logo" id="logo-icon">
-            <h1>ToDo Lists</h1>
-        </div>
-        <ul>
-            <li id="home" class="list-item">
-                <a href="#">
-                    <img id="home-icon" src="" alt="home icon" class="icon">
-                    <span>Home</span>
-                </a>
-            </li>
-            <li id="today" class="list-item">
-                <a href="#">
-                    <img id="today-icon" src="" alt="today icon" class="icon">
-                    <span>Today</span>
-                </a>
-            </li>
-            <li id="favourites" class="list-item">
-                <button id="favourites-dropdown-btn" class="dropdown-btn expandable">
-                    <img id="favourites-icon" src="" alt="favorites icon" class="icon">
-                    <span>Favourites</span>
-                    <img id="favourites-expand-icon" src="" alt="expand icon" class="icon">
-                </button>
-                <ul id="favourites-list" class="sub-list">
-                    <div>
-                    </div>
-                </ul>
-            </li>
-            <li id="projects" class="list-item">    
-                <button id="projects-dropdown-btn" class="dropdown-btn expandable">
-                    <img id="projects-icon" src="" alt="projects icon" class="icon">
-                    <span>Projects</span>
-                    <img id="projects-expand-icon" src="" alt="expand icon" class="icon">
-                    <img src="" alt="add new project" id="add-project-icon" class="icon">
-                </button>
-                <ul id="projects-list" class="sub-list">
-                    <div></div>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-    <main>
-        <div id="projectModal" class="modal">
-            <h1>Add Project</h1>
-            <input id="project-name" type="text" placeholder="Project name" required>
-            <div>
-                <button id="add-project-btn">Add</button>
-                <button id="cancel-btn">Cancel</button>
+    <div id="content">
+        <div id="overlay"></div>
+        <nav id="sidebar">
+            <div id="logo-div">
+                <img src="" alt="logo" id="logo-icon">
+                <h1>ToDo Lists</h1>
             </div>
-        </div>
-    </main>
+            <ul>
+                <li id="home" class="list-item">
+                    <a href="#">
+                        <img id="home-icon" src="" alt="home icon" class="icon">
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li id="today" class="list-item">
+                    <a href="#">
+                        <img id="today-icon" src="" alt="today icon" class="icon">
+                        <span>Today</span>
+                    </a>
+                </li>
+                <li id="favourites" class="list-item">
+                    <button id="favourites-dropdown-btn" class="dropdown-btn expandable">
+                        <img id="favourites-icon" src="" alt="favorites icon" class="icon">
+                        <span>Favourites</span>
+                        <img id="favourites-expand-icon" src="" alt="expand icon" class="icon">
+                    </button>
+                    <ul id="favourites-list" class="sub-list">
+                        <div>
+                        </div>
+                    </ul>
+                </li>
+                <li id="projects" class="list-item">    
+                    <button id="projects-dropdown-btn" class="dropdown-btn expandable">
+                        <img id="projects-icon" src="" alt="projects icon" class="icon">
+                        <span>Projects</span>
+                        <img id="projects-expand-icon" src="" alt="expand icon" class="icon">
+                        <img src="" alt="add new project" id="add-project-icon" class="icon">
+                    </button>
+                    <ul id="projects-list" class="sub-list">
+                        <div></div>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <main>
+            <div id="projectModal" class="modal">
+                <h1>Add Project</h1>
+                <input id="project-name" type="text" placeholder="Project name" required>
+                <div>
+                    <button id="add-project-btn">Add</button>
+                    <button id="cancel-btn">Cancel</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
     <footer></footer>
 </body>
 </html>

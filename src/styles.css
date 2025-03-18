@@ -25,24 +25,36 @@
 
 :root {
     --font-color: #ffffff;
-    --bg-color: #05030e;
+    --bg-color: #130a2e;
+    --bg-color2: #010103;
     --theme-color: #41229e;
     --theme-color-light: #613ad6;
-    --theme-color-light: #6b40ec;
     --text-bg-color: #424242;
 }
 
 body {
+    min-height: 100vh;
     background-color: var(--bg-color);
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#content {
+    width: 70vw;
+    height: 80vh;
     display: grid;
     grid-template-columns: auto 1fr;
+    background-color: var(--bg-color2);
+    border: 1px solid #505050;
+    border-radius: 20px;
+    box-shadow: 10px 10px 50px #000000;
 }
 
 #sidebar {
     width: 300px;
-    height: 100vh;
     border-right: 1px solid #505050;
     display: flex;
     flex-direction: column;
@@ -244,10 +256,10 @@ input[type="text"] {
 
 .add-fav-icon {
     position: fixed;
-    left: 13em;
+    left: 32em;
 }
 
 .remove-icon {
     position: fixed;
-    left: 15em;
+    left: 34em;
 }
