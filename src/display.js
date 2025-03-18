@@ -148,3 +148,10 @@ export function removeProject() {
         toggleHeader(projectLists.previousElementSibling);
     }
 }
+
+export function toggleAddProjectModal() {
+    const projectModal = document.querySelector("#projectModal");
+
+    projectModal.classList.toggle('active');
+    overlay.classList.toggle("active");
+}
