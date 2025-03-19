@@ -11,17 +11,20 @@ import collapse_icon from "./images/collapse_icon.png";
 import addFavouritesIcon from "./images/favourites_add_icon.png";
 import favouritesAddedIcon from "./images/favourites_added_icon.png";
 import remove_icon from "./images/close_icon.png";
+import add_task_icon from "./images/add_task_icon.png";
 
 export function renderIcons() {
     const elements = [
-        { name: "home", icon: home_icon, type: "nav" },
-        { name: "today", icon: calendar_icon, type: "nav" },
-        { name: "favourites", icon: favourites_icon, type: "nav" },
-        { name: "projects", icon: projects_icon, type: "nav" },
-        { name: "favourites-expand", icon: expand_icon, type: "nav" },
-        { name: "projects-expand", icon: expand_icon, type: "nav" },
-        { name: "logo", icon: todo_icon, type: "nav" },
-        { name: "add-project", icon: add_icon, type: "nav" }
+        { name: "home", icon: home_icon },
+        { name: "today", icon: calendar_icon },
+        { name: "favourites", icon: favourites_icon },
+        { name: "projects", icon: projects_icon},
+        { name: "favourites-expand", icon: expand_icon },
+        { name: "projects-expand", icon: expand_icon },
+        { name: "logo", icon: todo_icon },
+        { name: "add-fav", icon: addFavouritesIcon },
+        { name: "add-project", icon: add_icon },
+        { name: "add-task", icon: add_task_icon }
     ];
 
     elements.forEach(element => {
@@ -55,7 +58,7 @@ export function buildProjectList(projects) {
 
     projectLists.firstElementChild.innerHTML = "";
 
-    let idCounter = 0;
+    let idCounter = 1;
 
     projects.forEach(project => {
         const newProject = document.createElement('li');
@@ -85,7 +88,9 @@ export function buildProjectList(projects) {
         
         div.appendChild(newProject);
         div.appendChild(favouriteIcon);
-        div.appendChild(removeIcon);
+        if (project != "Default") {
+            div.appendChild(removeIcon);
+        }
 
         projectLists.firstElementChild.appendChild(div);
 
