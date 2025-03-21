@@ -1,30 +1,32 @@
 // Handles rendering of pages
 
-import calendar_icon from "./images/calendar_icon.png";
+import today_icon from "./images/today_icon.png";
 import favourites_icon from "./images/favourites_icon.png";
 import projects_icon from "./images/projects_icon.png";
 import todo_icon from "./images/todolist_icon.png";
 import add_icon from "./images/add.png";
-import home_icon from "./images/home_icon.png";
+import thisWeek_icon from "./images/week_icon.png";
 import expand_icon from "./images/expand_icon.png";
 import collapse_icon from "./images/collapse_icon.png";
-import addFavouritesIcon from "./images/favourites_add_icon.png";
-import favouritesAddedIcon from "./images/favourites_added_icon.png";
+import addFavourites_icon from "./images/favourites_add_icon.png";
+import favouritesAdded_icon from "./images/favourites_added_icon.png";
 import remove_icon from "./images/close_icon.png";
-import add_task_icon from "./images/add_task_icon.png";
+import addTask_icon from "./images/add_task_icon.png";
+import addTask_icon2 from "./images/add_task_icon2.png";
+import attachListeners from "./eventListeners";
 
 export function renderIcons() {
     const elements = [
-        { name: "home", icon: home_icon },
-        { name: "today", icon: calendar_icon },
+        { name: "today", icon: today_icon },
+        { name: "thisWeek", icon: thisWeek_icon },
         { name: "favourites", icon: favourites_icon },
         { name: "projects", icon: projects_icon},
         { name: "favourites-expand", icon: expand_icon },
         { name: "projects-expand", icon: expand_icon },
         { name: "logo", icon: todo_icon },
-        { name: "add-fav", icon: addFavouritesIcon },
+        { name: "add-fav", icon: addFavourites_icon },
         { name: "add-project", icon: add_icon },
-        { name: "add-task", icon: add_task_icon }
+        { name: "add-task", icon: addTask_icon }
     ];
 
     elements.forEach(element => {
@@ -75,10 +77,10 @@ export function buildProjectList(projects) {
         favouriteIcon.classList.add('add-fav-icon');
         favouritesList.firstElementChild.childNodes.forEach(node => {
             if (node.id === newProject.id) {
-                favouriteIcon.src = favouritesAddedIcon;
+                favouriteIcon.src = favouritesAdded_icon;
             }   
             else {
-                favouriteIcon.src = addFavouritesIcon;
+                favouriteIcon.src = addFavourites_icon;
             }
         });
 
@@ -98,12 +100,12 @@ export function buildProjectList(projects) {
             toggleHeader(projectHeader);
 
         favouriteIcon.addEventListener('click', (event) => {
-            if (favouriteIcon.src === addFavouritesIcon) {
-                favouriteIcon.src = favouritesAddedIcon;
+            if (favouriteIcon.src === addFavourites_icon) {
+                favouriteIcon.src = favouritesAdded_icon;
                 addToFavorites(event.target.previousElementSibling);
             }
             else {
-                favouriteIcon.src = addFavouritesIcon;
+                favouriteIcon.src = addFavourites_icon;
                 removeFromFavorites(event.target.previousElementSibling);
             }
         })
@@ -159,4 +161,75 @@ export function toggleAddProjectModal() {
 
     projectModal.classList.toggle('active');
     overlay.classList.toggle("active");
+}
+
+export function addTask(tasks) {
+    const priorityListValues = ["Low", "Medium", "High"];
+
+    const taskList = document.querySelector("#task-list");
+    taskList.innerHTML = "";
+
+    if (tasks.length === 0) {
+        taskList.classList.toggle("empty");
+    }
+
+    tasks.forEach(task => {
+        taskList.appendChild(task);
+    });
+
+    const task = document.createElement("div");
+    task.classList.add("task");
+
+    const title = document.createElement("input");
+    const dueDate = document.createElement("input");
+    const priorityLabel = document.createElement("label");
+    const priorityList = document.createElement("select");
+    const checkbox = document.createElement("input");
+
+    title.type = "text";
+    title.classList.add("taskTitle");
+    title.placeholder = "Title";
+
+    dueDate.type = "date";
+    dueDate.classList.add("taskDueDate");
+
+    const priorityDiv = document.createElement("div");
+    priorityLabel.for = "priority";
+    priorityLabel.innerHTML = "Priority:";
+    priorityList.name = "priority";
+    priorityList.classList.add("taskPriority");
+
+    priorityListValues.forEach(priority => {
+        const option = document.createElement("option");
+        option.value = priority;
+        option.innerHTML = priority;
+        priorityList.appendChild(option);
+    });
+
+    priorityDiv.appendChild(priorityLabel);
+    priorityDiv.appendChild(priorityList);
+
+    checkbox.type = "checkbox";
+    checkbox.classList.add("taskCheckbox");
+
+    let div = document.createElement("div");
+    div.appendChild(dueDate);
+    div.appendChild(priorityDiv);
+    div.appendChild(checkbox);
+
+    task.appendChild(title);
+    task.appendChild(div);
+
+    div = document.createElement("div");
+    const addTaskIcon = document.createElement("img");
+    addTaskIcon.src = addTask_icon2
+    addTaskIcon.id = "add-task-icon2"
+
+    div.id = "img_div"
+    div.appendChild(addTaskIcon)
+
+    taskList.appendChild(task);
+    taskList.appendChild(div);
+
+    attachListeners(div);
 }

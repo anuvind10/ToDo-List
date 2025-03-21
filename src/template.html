@@ -14,16 +14,16 @@
                 <h1>ToDo Lists</h1>
             </div>
             <ul>
-                <li id="home" class="list-item">
-                    <a href="#">
-                        <img id="home-icon" src="" alt="home icon" class="icon">
-                        <span>Home</span>
-                    </a>
-                </li>
                 <li id="today" class="list-item">
                     <a href="#">
-                        <img id="today-icon" src="" alt="today icon" class="icon">
+                        <img id="today-icon" src="" alt="Today" class="icon">
                         <span>Today</span>
+                    </a>
+                </li>
+                <li id="thisWeek" class="list-item">
+                    <a href="#">
+                        <img id="thisWeek-icon" src="" alt="This Week" class="icon">
+                        <span>This Week</span>
                     </a>
                 </li>
                 <li id="favourites" class="list-item">
@@ -44,7 +44,7 @@
                         <img id="projects-expand-icon" src="" alt="expand icon" class="icon">
                         <img src="" alt="add new project" id="add-project-icon" class="icon">
                     </button>
-                    <ul id="projects-list" class="sub-list">
+                    <ul id="projects-list" class="sub-list show">
                         <div>
                             <div class="project">
                                 <li id="defaultProject-0">Default</li>
@@ -64,7 +64,7 @@
                     <button id="cancel-btn">Cancel</button>
                 </div>
             </div>
-            <div id="task-list">
+            <div id="task-list" class="empty">
                 <div id="empty-task-list">
                     <img src="" alt="Add Task" id="add-task-icon">
                     <p>Add New Task</p>

@@ -25,11 +25,12 @@
 
 :root {
     --font-color: #ffffff;
-    --bg-color: #130a2e;
+    --bg-color: #2e1770;
     --bg-color2: #010103;
     --theme-color: #41229e;
     --theme-color-light: #613ad6;
     --text-bg-color: #424242;
+    /* 130a2e */
 }
 
 body {
@@ -195,14 +196,15 @@ input {
     font-size: 2em;
 }
 
-input[type="text"] {
+.taskTitle {
     font-family: "Poppins";
+    height: 30px;
+    padding-left: 20px;
     outline: none;
     color: white;
     background-color: var(--text-bg-color);
     border: none;
     border-radius: 10px;
-    padding: 15px;
 }
 
 #projectModal div button {
@@ -265,17 +267,33 @@ input[type="text"] {
 }
 
 #task-list {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-family: "poppins";
+    margin: 40px 0;
+    height: calc(100% - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+
+#task-list > * {
+    justify-self: center;
+}
+
+#task-list.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 #add-task-icon {
     max-width: 100px;
     padding: 10px;
+}
+
+#add-task-icon2 {
+    max-width: 40px;
 }
 
 #add-task-icon:hover {
@@ -288,4 +306,71 @@ input[type="text"] {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+#task-list > #img_div {
+    width: 90%;
+    max-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #5050504d;
+    border-radius: 10px;
+}
+
+#task-list > #img_div:hover {
+    background-color: #50505077;
+}
+
+.task {
+    font-family: "Poppins";
+    width: 90%;
+    height: 80px;
+    padding: 0 40px;
+    border: 1px solid #505050;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    background: linear-gradient(to right, var(--bg-color), var(--bg-color2));
+    box-shadow: 5px 5px 10px #222222;
+}
+
+.task > div {
+    display: flex;
+    gap: 20px;
+    > div {
+        display: flex;
+        gap: 5px;
+    }
+}
+
+.task select {
+    height: 30px;
+    padding: 0 5px;
+    font-family: "Poppins";
+    background-color: var(--text-bg-color);
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+.taskCheckbox {
+    height: 30px;
+    width: min-content;
+    accent-color: var(--theme-color-light);
+    vertical-align: middle;
+    border-radius: 5px;
+}
+
+.taskDueDate {
+    height: 30px;
+    padding: 0 5px;
+    max-width: 120px;
+    background-color: var(--text-bg-color);
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
 }
