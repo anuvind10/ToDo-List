@@ -377,6 +377,10 @@ input {
     border-radius: 5px;
 }
 
+label {
+    vertical-align: middle;
+}
+
 .taskDueDate {
     height: 30px;
     padding: 0 5px;

@@ -191,6 +191,7 @@ export function addTask(tasks) {
     title.placeholder = "Title";
 
     dueDate.type = "date";
+    dueDate.value = new Date().toISOString().split("T")[0]
     dueDate.classList.add("taskDueDate");
 
     const priorityDiv = document.createElement("div");
