@@ -214,6 +214,15 @@ input {
     border-radius: 10px;
 }
 
+#project-name {
+    font-family: "Poppins";
+    background-color: var(--text-bg-color);
+    padding: 15px 10px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+}
+
 #projectModal div button {
     width: 100px;
     background-color: var(--theme-color);
@@ -250,6 +259,12 @@ input {
     padding-right: 30px;
 }
 
+.project.active {
+    > li {
+        color: var(--theme-color-light);
+    }
+}
+
 .project > img {
     max-height: 16px;
     opacity: 0;
@@ -257,6 +272,7 @@ input {
 }
 
 .project:hover {
+    cursor: pointer;
     > img {
         opacity: 1;
         transition: 0.3s ease-in-out;
@@ -356,6 +372,7 @@ input {
     > div {
         display: flex;
         gap: 5px;
+        align-items: center;
     }
 }
 
@@ -375,10 +392,6 @@ input {
     accent-color: var(--theme-color-light);
     vertical-align: middle;
     border-radius: 5px;
-}
-
-label {
-    vertical-align: middle;
 }
 
 .taskDueDate {

@@ -93,7 +93,12 @@ export function buildProjectList(projects) {
         if (project != "Default") {
             div.appendChild(removeIcon);
         }
+        else {
+            div.classList.add("active");
+        }
 
+        attachListeners(div);
+        
         projectLists.firstElementChild.appendChild(div);
 
         if (!projectLists.classList.contains('show'))
@@ -108,9 +113,13 @@ export function buildProjectList(projects) {
                 favouriteIcon.src = addFavourites_icon;
                 removeFromFavorites(event.target.previousElementSibling);
             }
+            event.stopPropagation();
         })
 
-        removeIcon.addEventListener('click', removeProject)
+        removeIcon.addEventListener('click', (event) => {
+            removeProject(event.target);
+            event.stopPropagation();
+        })
     });
 }
 
@@ -138,11 +147,11 @@ export function removeFromFavorites(project) {
     }
 }
 
-export function removeProject() {
+export function removeProject(event) {
     const projectLists = document.querySelector("#projects-list");
     const favouritesList = document.querySelector("#favourites-list");
-    const toRemove = this.parentElement;
-    const project = this.parentElement.firstElementChild;
+    const toRemove = event.parentElement;
+    const project = event.parentElement.firstElementChild;
 
     projectLists.firstElementChild.removeChild(toRemove);
     favouritesList.firstElementChild.childNodes.forEach(node => {
@@ -153,6 +162,13 @@ export function removeProject() {
 
     if (projectLists.firstElementChild.childElementCount === 0) {
         toggleHeader(projectLists.previousElementSibling);
+    }
+
+    if (projectLists.childElementCount == 1) {
+        const defaultProject = projectLists.firstElementChild.firstElementChild;
+        if (!defaultProject.classList.contains("active")) {
+            defaultProject.classList.toggle("active");
+        }
     }
 }
 
@@ -182,6 +198,7 @@ export function addTask(tasks) {
 
     const title = document.createElement("input");
     const dueDate = document.createElement("input");
+    const dueDateLabel = document.createElement("label");
     const priorityLabel = document.createElement("label");
     const priorityList = document.createElement("select");
     const checkbox = document.createElement("input");
@@ -190,13 +207,21 @@ export function addTask(tasks) {
     title.classList.add("taskTitle");
     title.placeholder = "Title";
 
+    const dueDateDiv = document.createElement("div");
+    dueDateLabel.for = "dueDate";
+    dueDateLabel.innerHTML = "Due Date: ";
+
+    dueDate.name = "dueDate";
     dueDate.type = "date";
     dueDate.value = new Date().toISOString().split("T")[0]
     dueDate.classList.add("taskDueDate");
 
+    dueDateDiv.appendChild(dueDateLabel);
+    dueDateDiv.appendChild(dueDate);
+
     const priorityDiv = document.createElement("div");
     priorityLabel.for = "priority";
-    priorityLabel.innerHTML = "Priority:";
+    priorityLabel.innerHTML = "Priority: ";
     priorityList.name = "priority";
     priorityList.classList.add("taskPriority");
 
@@ -214,12 +239,14 @@ export function addTask(tasks) {
     checkbox.classList.add("taskCheckbox");
 
     let div = document.createElement("div");
-    div.appendChild(dueDate);
+    div.appendChild(dueDateDiv);
     div.appendChild(priorityDiv);
     div.appendChild(checkbox);
 
     task.appendChild(title);
     task.appendChild(div);
+
+    task.setAttribute("data-project", "default");
 
     div = document.createElement("div");
     const addTaskIcon = document.createElement("img");
@@ -233,4 +260,16 @@ export function addTask(tasks) {
     taskList.appendChild(div);
 
     attachListeners(div);
+}
+
+export function toggleActiveProject(element) {
+    const projectList = document.querySelectorAll(".project");
+
+    projectList.forEach(project => {
+        if (project.classList.contains("active"))
+            project.classList.toggle("active");
+    });
+
+    const activeProject = element.id == "" ? element : element.parentElement    
+    activeProject.classList.toggle("active")
 }

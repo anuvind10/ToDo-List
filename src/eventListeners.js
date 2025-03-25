@@ -1,4 +1,4 @@
-import { toggleHeader, addToFavorites, removeFromFavorites, buildProjectList, toggleAddProjectModal, addTask } from "./display";
+import * as updateDisplay from "./display";
 import { addProject } from "./projects";
 
 import addFavourites_icon from "./images/favourites_add_icon.png";
@@ -17,10 +17,10 @@ export default function attachListeners(element = "") {
                 element.addEventListener("click", () => {
                     let projects = getProjectList();
             
-                    buildProjectList(projects)
+                    updateDisplay.buildProjectList(projects)
                     projectName.value = "";
             
-                    toggleAddProjectModal()
+                    updateDisplay.toggleAddProjectModal()
                 }, {once: true}); // to avoid stacking up eventlisteners
     
                 break;
@@ -39,7 +39,9 @@ export default function attachListeners(element = "") {
                 break;
 
             default:
-                break;
+                element.addEventListener("click", (event) => {
+                    updateDisplay.toggleActiveProject(event.target);
+                });
         }        
     }
     else {
@@ -47,7 +49,7 @@ export default function attachListeners(element = "") {
 
         expandableHeaders.forEach(header => {
             header.addEventListener("click", (event) => {
-               toggleHeader(event.target)
+               updateDisplay.toggleHeader(event.target)
             })
         });
    
@@ -61,11 +63,11 @@ export default function attachListeners(element = "") {
         defaultFavIcon.addEventListener("click", (event) => {
             if (defaultFavIcon.src === addFavourites_icon) {
                 defaultFavIcon.src = favouritesAdded_icon;
-                addToFavorites(event.target.previousElementSibling);
+                updateDisplay.addToFavorites(event.target.previousElementSibling);
             }
             else {
                 defaultFavIcon.src = addFavourites_icon;
-                removeFromFavorites(event.target.previousElementSibling);
+                updateDisplay.removeFromFavorites(event.target.previousElementSibling);
             }
         })
     }
@@ -85,7 +87,7 @@ function createNewTask() {
         }
         
     }
-    addTask(tasks)  
+    updateDisplay.addTask(tasks);
 }
 
 function getProjectList() {
