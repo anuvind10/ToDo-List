@@ -149,16 +149,21 @@ export function removeFromFavorites(project) {
 }
 
 export function removeProject(event) {
+    const defaultProject = document.querySelector("#Default-0");
     const projectLists = document.querySelector("#projects-list");
     const favouritesList = document.querySelector("#favourites-list");
     const toRemove = event.parentElement;
     const project = event.parentElement.firstElementChild;
+    const tasks = document.querySelectorAll(".task");
+    const taskList = document.querySelector("#task-list");
 
     projectLists.firstElementChild.removeChild(toRemove);
+    defaultProject.classList.add("active");
+    renderTasks(defaultProject);
     favouritesList.firstElementChild.childNodes.forEach(node => {
         if (node.id === project.id) {
             favouritesList.firstElementChild.removeChild(node);
-        }   
+        }
     });
 
     if (projectLists.firstElementChild.childElementCount === 0) {
@@ -171,6 +176,11 @@ export function removeProject(event) {
             defaultProject.classList.toggle("activeProject");
         }
     }
+
+    tasks.forEach(task => {
+        if (task.getAttribute("data-project") === toRemove.id)
+            taskList.removeChild(task);
+    });
 }
 
 export function toggleAddProjectModal() {
@@ -297,8 +307,9 @@ function renderTasks(activeProject) {
 
     if (activeProjectTasks.length === 0) {
         emptyTaskList.style.display = "flex";
-        addTask2.style.display = "none";
         taskList.classList.add("empty");
+        if (addTask2)
+            addTask2.style.display = "none";
     }
     else {
         emptyTaskList.style.display = "none";
