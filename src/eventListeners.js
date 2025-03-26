@@ -9,9 +9,10 @@ export default function attachListeners(element = "") {
     const addProjectBtn = document.querySelector("#add-project-icon");
     const projectName = document.querySelector("#project-name");
     const addTaskBtn = document.querySelector("#add-task-icon");
+    const today = document.querySelector("#today");
+    const thisWeek = document.querySelector("#thisWeek");
     
     if (!element == "") {
-
         switch (element.id) {
             case "add-project-btn":
                 element.addEventListener("click", () => {
@@ -69,6 +70,14 @@ export default function attachListeners(element = "") {
                 defaultFavIcon.src = addFavourites_icon;
                 updateDisplay.removeFromFavorites(event.target.previousElementSibling);
             }
+        })
+
+        today.addEventListener("click", (event) => {
+            updateDisplay.renderTasks(event.target);
+        })
+
+        thisWeek.addEventListener("click", (event) => {
+            updateDisplay.renderTasks(event.target);
         })
     }
 }

@@ -94,6 +94,9 @@ main {
     border-radius: 10px;
 }
 
+.list-item.active > a > span {
+    color: var(--theme-color-light);
+}
 
 #add-project-icon {
     opacity: 0;

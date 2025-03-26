@@ -158,7 +158,7 @@ export function removeProject(event) {
     const taskList = document.querySelector("#task-list");
 
     projectLists.firstElementChild.removeChild(toRemove);
-    defaultProject.classList.add("active");
+    defaultProject.classList.add("activeProject");
     renderTasks(defaultProject);
     favouritesList.firstElementChild.childNodes.forEach(node => {
         if (node.id === project.id) {
@@ -288,32 +288,79 @@ export function toggleActiveProject(element) {
     renderTasks(activeProject);
 }
 
-function renderTasks(activeProject) {
+export function renderTasks(trigger) {
     const tasks = document.querySelectorAll(".task");
     const emptyTaskList = document.querySelector("#empty-task-list");
     const addTask2 = document.querySelector("#img_div");
     const taskList = document.querySelector("#task-list");
+    const navListItems = document.querySelectorAll(".list-item");
+    let activeProject;
 
-    tasks.forEach(task => {
-        if (task.getAttribute("data-project") !== activeProject.id) {
-            task.style.display = "none";
+    if (trigger.closest("li").id != "today" && trigger.closest("li").id != "thisWeek" ) {
+        activeProject = trigger;
+        tasks.forEach(task => {
+            if (task.getAttribute("data-project") !== trigger.id) {
+                task.style.display = "none";
+            }
+            else {
+                task.style.display = "flex";
+            }
+        });
+    
+        const activeProjectTasks = document.querySelectorAll(`[data-project="${trigger.id}"]`);
+    
+        if (activeProjectTasks.length === 0) {
+            emptyTaskList.style.display = "flex";
+            taskList.classList.add("empty");
+            if (addTask2)
+                addTask2.style.display = "none";
         }
         else {
-            task.style.display = "flex";
-        }
-    });
-
-    const activeProjectTasks = document.querySelectorAll(`[data-project="${activeProject.id}"]`);
-
-    if (activeProjectTasks.length === 0) {
-        emptyTaskList.style.display = "flex";
-        taskList.classList.add("empty");
-        if (addTask2)
-            addTask2.style.display = "none";
+            emptyTaskList.style.display = "none";
+            addTask2.style.display = "flex";
+            taskList.classList.remove("empty");
+        }   
     }
     else {
-        emptyTaskList.style.display = "none";
-        addTask2.style.display = "flex";
-        taskList.classList.remove("empty");
+        activeProject = document.querySelector(".activeProject");
+        const dates = document.querySelectorAll("input[type=date]");
+        const today = new Date();
+        const maxDate = new Date();
+        maxDate.setDate(today.getDate() + 7)
+
+        if (trigger.closest("li").id === "today") {
+            dates.forEach(date => {
+                if (date.value === today.toISOString().split("T")[0]) {
+                    date.closest(".task").style.display = "flex";
+                }
+                else {
+                    date.closest(".task").style.display = "none";
+                }
+            });
+        }
+        else if (trigger.closest("li").id === "thisWeek") {
+            dates.forEach(date => {
+                if (date.value >= today.toISOString().split("T")[0] 
+                    && date.value <= maxDate.toISOString().split("T")[0]) {
+                    date.closest(".task").style.display = "flex";
+                }
+                else {
+                    date.closest(".task").style.display = "none";
+                }
+            });
+        }
+
+        if (activeProject) {
+            activeProject.classList.remove("activeProject");
+        }
+
+        navListItems.forEach(listItem => {
+            if (listItem.id === trigger.closest("li").id) {
+                listItem.classList.add("active");
+            }
+            else {
+                listItem.classList.remove("active");
+            }
+        });
     }
 }
