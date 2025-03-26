@@ -8,8 +8,6 @@ import add_icon from "./images/add.png";
 import thisWeek_icon from "./images/week_icon.png";
 import expand_icon from "./images/expand_icon.png";
 import collapse_icon from "./images/collapse_icon.png";
-import addFavourites_icon from "./images/favourites_add_icon.png";
-import favouritesAdded_icon from "./images/favourites_added_icon.png";
 import remove_icon from "./images/close_icon.png";
 import addTask_icon from "./images/add_task_icon.png";
 import addTask_icon2 from "./images/add_task_icon2.png";
@@ -19,12 +17,9 @@ export function renderIcons() {
     const elements = [
         { name: "today", icon: today_icon },
         { name: "thisWeek", icon: thisWeek_icon },
-        { name: "favourites", icon: favourites_icon },
         { name: "projects", icon: projects_icon},
-        { name: "favourites-expand", icon: expand_icon },
         { name: "projects-expand", icon: expand_icon },
         { name: "logo", icon: todo_icon },
-        { name: "add-fav", icon: addFavourites_icon },
         { name: "add-project", icon: add_icon },
         { name: "add-task", icon: addTask_icon }
     ];
@@ -56,7 +51,6 @@ export function toggleHeader(element) {
 export function buildProjectList(projects) {
     const projectLists = document.querySelector("#projects-list");
     const projectHeader = document.querySelector("#projects-dropdown-btn");
-    const favouritesList = document.querySelector("#favourites-list");
 
     projectLists.firstElementChild.innerHTML = "";
 
@@ -67,30 +61,18 @@ export function buildProjectList(projects) {
         newProject.innerHTML = project;
 
         const div = document.createElement('div');
-        const favouriteIcon = document.createElement('img');
         const removeIcon = document.createElement('img');
 
         div.id = project + `-${idCounter}`;
         idCounter++;
 
         div.classList.add("project");
-        favouriteIcon.classList.add('icon');
-        favouriteIcon.classList.add('add-fav-icon');
-        favouritesList.firstElementChild.childNodes.forEach(node => {
-            if (node.id === newProject.id) {
-                favouriteIcon.src = favouritesAdded_icon;
-            }   
-            else {
-                favouriteIcon.src = addFavourites_icon;
-            }
-        });
 
         removeIcon.classList.add('icon');
         removeIcon.classList.add('remove-icon');
         removeIcon.src = remove_icon;
         
         div.appendChild(newProject);
-        div.appendChild(favouriteIcon);
         if (project != "Default") {
             div.appendChild(removeIcon);
         }
@@ -105,18 +87,6 @@ export function buildProjectList(projects) {
         if (!projectLists.classList.contains('show'))
             toggleHeader(projectHeader);
 
-        favouriteIcon.addEventListener('click', (event) => {
-            if (favouriteIcon.src === addFavourites_icon) {
-                favouriteIcon.src = favouritesAdded_icon;
-                addToFavorites(event.target.parentElement);
-            }
-            else {
-                favouriteIcon.src = addFavourites_icon;
-                removeFromFavorites(event.target.parentElement);
-            }
-            event.stopPropagation();
-        })
-
         removeIcon.addEventListener('click', (event) => {
             removeProject(event.target);
             event.stopPropagation();
@@ -124,34 +94,9 @@ export function buildProjectList(projects) {
     });
 }
 
-export function addToFavorites(project) {
-    const favouritesList = document.querySelector("#favourites-list");
-    const newFavourite = document.createElement("li");
-
-    newFavourite.innerHTML = project.firstElementChild.innerHTML;
-    newFavourite.id = project.id;
-    favouritesList.firstElementChild.appendChild(newFavourite);
-
-    if (!favouritesList.classList.contains("show")) {
-        toggleHeader(favouritesList.previousElementSibling)
-    }
-}
-
-export function removeFromFavorites(project) {
-    const favouritesList = document.querySelector("#favourites-list");
-    const projectToRemove = document.querySelector(`#${project.id}`);
-
-    favouritesList.firstElementChild.removeChild(projectToRemove);
-
-    if (favouritesList.firstElementChild.childElementCount === 0) {
-        toggleHeader(favouritesList.previousElementSibling);   
-    }
-}
-
 export function removeProject(event) {
     const defaultProject = document.querySelector("#Default-0");
     const projectLists = document.querySelector("#projects-list");
-    const favouritesList = document.querySelector("#favourites-list");
     const toRemove = event.parentElement;
     const project = event.parentElement.firstElementChild;
     const tasks = document.querySelectorAll(".task");
@@ -160,11 +105,6 @@ export function removeProject(event) {
     projectLists.firstElementChild.removeChild(toRemove);
     defaultProject.classList.add("activeProject");
     renderTasks(defaultProject);
-    favouritesList.firstElementChild.childNodes.forEach(node => {
-        if (node.id === project.id) {
-            favouritesList.firstElementChild.removeChild(node);
-        }
-    });
 
     if (projectLists.firstElementChild.childElementCount === 0) {
         toggleHeader(projectLists.previousElementSibling);

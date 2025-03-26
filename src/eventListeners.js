@@ -1,10 +1,7 @@
 import * as updateDisplay from "./display";
 import { addProject } from "./projects";
 
-import addFavourites_icon from "./images/favourites_add_icon.png";
-import favouritesAdded_icon from "./images/favourites_added_icon.png";
-
-export default function attachListeners(element = "") {
+        export default function attachListeners(element = "") {
     const expandableHeaders = document.querySelectorAll(".expandable");
     const addProjectBtn = document.querySelector("#add-project-icon");
     const projectName = document.querySelector("#project-name");
@@ -61,17 +58,6 @@ export default function attachListeners(element = "") {
 
         addTaskBtn.addEventListener("click", createNewTask);
         
-        defaultFavIcon.addEventListener("click", (event) => {
-            if (defaultFavIcon.src === addFavourites_icon) {
-                defaultFavIcon.src = favouritesAdded_icon;
-                updateDisplay.addToFavorites(event.target.parentElement);
-            }
-            else {
-                defaultFavIcon.src = addFavourites_icon;
-                updateDisplay.removeFromFavorites(event.target.parentElement);
-            }
-        })
-
         today.addEventListener("click", (event) => {
             updateDisplay.renderTasks(event.target);
         })
