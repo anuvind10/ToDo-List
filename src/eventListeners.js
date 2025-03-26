@@ -1,7 +1,7 @@
 import * as updateDisplay from "./display";
 import { addProject } from "./projects";
 
-        export default function attachListeners(element = "") {
+export default function attachListeners(element = "") {
     const expandableHeaders = document.querySelectorAll(".expandable");
     const addProjectBtn = document.querySelector("#add-project-icon");
     const projectName = document.querySelector("#project-name");

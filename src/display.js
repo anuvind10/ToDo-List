@@ -1,7 +1,6 @@
 // Handles rendering of pages
 
 import today_icon from "./images/today_icon.png";
-import favourites_icon from "./images/favourites_icon.png";
 import projects_icon from "./images/projects_icon.png";
 import todo_icon from "./images/todolist_icon.png";
 import add_icon from "./images/add.png";
@@ -132,6 +131,8 @@ export function toggleAddProjectModal() {
 
 export function addTask(tasks) {
     const currentProject = document.querySelector(".activeProject");
+    const defaultProject = document.querySelector("#Default-0");
+
     const priorityListValues = ["Low", "Medium", "High"];
 
     const taskList = document.querySelector("#task-list");
@@ -198,7 +199,7 @@ export function addTask(tasks) {
     task.appendChild(title);
     task.appendChild(div);
 
-    task.setAttribute("data-project", currentProject.id);
+    currentProject ? task.setAttribute("data-project", currentProject.id) : task.setAttribute("data-project", defaultProject.id);
 
     div = document.createElement("div");
     const addTaskIcon = document.createElement("img");
@@ -216,6 +217,7 @@ export function addTask(tasks) {
 
 export function toggleActiveProject(element) {
     const projectList = document.querySelectorAll(".project");
+    const listItem = document.querySelectorAll(".list-item");
 
     projectList.forEach(project => {
         if (project.classList.contains("activeProject"))
@@ -224,6 +226,12 @@ export function toggleActiveProject(element) {
 
     const activeProject = element.id == "" ? element.parentElement : element;
     activeProject.classList.toggle("activeProject");
+
+    listItem.forEach(item => {
+        if (item.classList.contains("active")) {
+            item.classList.remove("active");
+        }
+    });
 
     renderTasks(activeProject);
 }
