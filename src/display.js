@@ -108,11 +108,11 @@ export function buildProjectList(projects) {
         favouriteIcon.addEventListener('click', (event) => {
             if (favouriteIcon.src === addFavourites_icon) {
                 favouriteIcon.src = favouritesAdded_icon;
-                addToFavorites(event.target.previousElementSibling);
+                addToFavorites(event.target.parentElement);
             }
             else {
                 favouriteIcon.src = addFavourites_icon;
-                removeFromFavorites(event.target.previousElementSibling);
+                removeFromFavorites(event.target.parentElement);
             }
             event.stopPropagation();
         })
@@ -128,7 +128,7 @@ export function addToFavorites(project) {
     const favouritesList = document.querySelector("#favourites-list");
     const newFavourite = document.createElement("li");
 
-    newFavourite.innerHTML = project.innerHTML;
+    newFavourite.innerHTML = project.firstElementChild.innerHTML;
     newFavourite.id = project.id;
     favouritesList.firstElementChild.appendChild(newFavourite);
 

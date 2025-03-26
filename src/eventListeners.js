@@ -64,11 +64,11 @@ export default function attachListeners(element = "") {
         defaultFavIcon.addEventListener("click", (event) => {
             if (defaultFavIcon.src === addFavourites_icon) {
                 defaultFavIcon.src = favouritesAdded_icon;
-                updateDisplay.addToFavorites(event.target.previousElementSibling);
+                updateDisplay.addToFavorites(event.target.parentElement);
             }
             else {
                 defaultFavIcon.src = addFavourites_icon;
-                updateDisplay.removeFromFavorites(event.target.previousElementSibling);
+                updateDisplay.removeFromFavorites(event.target.parentElement);
             }
         })
 
