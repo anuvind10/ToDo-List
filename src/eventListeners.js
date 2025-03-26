@@ -10,8 +10,8 @@ export default function attachListeners(element = "") {
     const thisWeek = document.querySelector("#thisWeek");
     
     if (!element == "") {
-        switch (element.id) {
-            case "add-project-btn":
+        switch (true) {
+            case element.id === "add-project-btn":
                 element.addEventListener("click", () => {
                     let projects = getProjectList();
             
@@ -23,7 +23,7 @@ export default function attachListeners(element = "") {
     
                 break;
     
-            case "cancel-btn":
+            case element.id === "cancel-btn":
                 element.addEventListener("click", () => {
                     projectName.value = "";
                     projectModal.classList.toggle('active');
@@ -32,18 +32,29 @@ export default function attachListeners(element = "") {
     
                 break;
 
-            case "img_div":
+            case element.id === "img_div":
                 element.addEventListener("click", createNewTask)
                 break;
 
-            default:
+            case element.classList.contains("taskCheckbox"):
+                element.addEventListener("click", (event) => {
+                    updateDisplay.updateTask(event.target);
+                })
+                break;
+
+            case element.classList.contains("project"):
                 element.addEventListener("click", (event) => {
                     updateDisplay.toggleActiveProject(event.target);
                 });
+                break;
+
+            default:
+                break;
         }        
     }
     else {
-        const defaultFavIcon = document.querySelector("#add-fav-icon");
+        const defaultProject = document.querySelector("#Default-0");
+        const archiveProject = document.querySelector("#Archive-9999");
 
         expandableHeaders.forEach(header => {
             header.addEventListener("click", (event) => {
@@ -64,6 +75,14 @@ export default function attachListeners(element = "") {
 
         thisWeek.addEventListener("click", (event) => {
             updateDisplay.renderTasks(event.target);
+        })
+
+        defaultProject.addEventListener("click", (event) => {
+            updateDisplay.toggleActiveProject(event.target);
+        })
+
+        archiveProject.addEventListener("click", (event) => {
+            updateDisplay.toggleActiveProject(event.target);
         })
     }
 }

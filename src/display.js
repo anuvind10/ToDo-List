@@ -63,7 +63,6 @@ export function buildProjectList(projects) {
         const removeIcon = document.createElement('img');
 
         div.id = project + `-${idCounter}`;
-        idCounter++;
 
         div.classList.add("project");
 
@@ -72,16 +71,23 @@ export function buildProjectList(projects) {
         removeIcon.src = remove_icon;
         
         div.appendChild(newProject);
-        if (project != "Default") {
+        if (project != "Default" && project != "Archive") {
             div.appendChild(removeIcon);
         }
-        else {
+        else if (project === "Default") {
             div.classList.add("activeProject");
         }
 
         attachListeners(div);
-        
-        projectLists.firstElementChild.appendChild(div);
+
+        if (idCounter < 2) {
+            projectLists.firstElementChild.appendChild(div);
+        }
+        else {
+            projectLists.firstElementChild.lastElementChild.before(div);
+        }
+
+        idCounter++;
 
         if (!projectLists.classList.contains('show'))
             toggleHeader(projectHeader);
@@ -213,6 +219,7 @@ export function addTask(tasks) {
     taskList.appendChild(div);
 
     attachListeners(div);
+    attachListeners(checkbox);
 }
 
 export function toggleActiveProject(element) {
@@ -311,4 +318,19 @@ export function renderTasks(trigger) {
             }
         });
     }
+}
+
+export function updateTask(task) {
+    const archive = document.querySelector("#Archive-9999");
+    const activeProject = document.querySelector(".activeProject");
+    const defaultProject = document.querySelector("#Default-0");
+
+    if (!task.checked) {
+        task.closest(".task").setAttribute("data-project", defaultProject.id);
+    }
+    else {
+        task.closest(".task").setAttribute("data-project", archive.id);
+    }
+
+    renderTasks(activeProject);
 }
