@@ -60,17 +60,18 @@ export function buildProjectList(projects) {
 
     projectLists.firstElementChild.innerHTML = "";
 
-    let idCounter = 1;
+    let idCounter = 0;
 
     projects.forEach(project => {
         const newProject = document.createElement('li');
         newProject.innerHTML = project;
-        newProject.id = project + `-${idCounter}`;
-        idCounter++;
 
         const div = document.createElement('div');
         const favouriteIcon = document.createElement('img');
         const removeIcon = document.createElement('img');
+
+        div.id = project + `-${idCounter}`;
+        idCounter++;
 
         div.classList.add("project");
         favouriteIcon.classList.add('icon');
@@ -94,7 +95,7 @@ export function buildProjectList(projects) {
             div.appendChild(removeIcon);
         }
         else {
-            div.classList.add("active");
+            div.classList.add("activeProject");
         }
 
         attachListeners(div);
@@ -166,8 +167,8 @@ export function removeProject(event) {
 
     if (projectLists.childElementCount == 1) {
         const defaultProject = projectLists.firstElementChild.firstElementChild;
-        if (!defaultProject.classList.contains("active")) {
-            defaultProject.classList.toggle("active");
+        if (!defaultProject.classList.contains("activeProject")) {
+            defaultProject.classList.toggle("activeProject");
         }
     }
 }
@@ -180,16 +181,17 @@ export function toggleAddProjectModal() {
 }
 
 export function addTask(tasks) {
+    const currentProject = document.querySelector(".activeProject");
     const priorityListValues = ["Low", "Medium", "High"];
 
     const taskList = document.querySelector("#task-list");
+    taskList.classList.remove("empty");
     taskList.innerHTML = "";
 
-    if (tasks.length === 0) {
-        taskList.classList.toggle("empty");
-    }
-
     tasks.forEach(task => {
+        if (task.id === "empty-task-list")
+            task.style.display = "none";
+        
         taskList.appendChild(task);
     });
 
@@ -246,7 +248,7 @@ export function addTask(tasks) {
     task.appendChild(title);
     task.appendChild(div);
 
-    task.setAttribute("data-project", "default");
+    task.setAttribute("data-project", currentProject.id);
 
     div = document.createElement("div");
     const addTaskIcon = document.createElement("img");
@@ -266,10 +268,41 @@ export function toggleActiveProject(element) {
     const projectList = document.querySelectorAll(".project");
 
     projectList.forEach(project => {
-        if (project.classList.contains("active"))
-            project.classList.toggle("active");
+        if (project.classList.contains("activeProject"))
+            project.classList.toggle("activeProject");
     });
 
-    const activeProject = element.id == "" ? element : element.parentElement    
-    activeProject.classList.toggle("active")
+    const activeProject = element.id == "" ? element.parentElement : element;
+    activeProject.classList.toggle("activeProject");
+
+    renderTasks(activeProject);
+}
+
+function renderTasks(activeProject) {
+    const tasks = document.querySelectorAll(".task");
+    const emptyTaskList = document.querySelector("#empty-task-list");
+    const addTask2 = document.querySelector("#img_div");
+    const taskList = document.querySelector("#task-list");
+
+    tasks.forEach(task => {
+        if (task.getAttribute("data-project") !== activeProject.id) {
+            task.style.display = "none";
+        }
+        else {
+            task.style.display = "flex";
+        }
+    });
+
+    const activeProjectTasks = document.querySelectorAll(`[data-project="${activeProject.id}"]`);
+
+    if (activeProjectTasks.length === 0) {
+        emptyTaskList.style.display = "flex";
+        addTask2.style.display = "none";
+        taskList.classList.add("empty");
+    }
+    else {
+        emptyTaskList.style.display = "none";
+        addTask2.style.display = "flex";
+        taskList.classList.remove("empty");
+    }
 }

@@ -78,14 +78,11 @@ function createNewTask() {
     let tasks = [];
             
     if (taskList.length > 0) {
-        if (taskList[0].id != "empty-task-list") {
-            taskList.forEach(task => {
-                if (task.id != "img_div") {
-                    tasks.push(task);
-                }
-            });
-        }
-        
+        taskList.forEach(task => {
+            if (task.id != "img_div") {
+                tasks.push(task);
+            }
+        });
     }
     updateDisplay.addTask(tasks);
 }

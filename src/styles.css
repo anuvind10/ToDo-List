@@ -259,7 +259,7 @@ input {
     padding-right: 30px;
 }
 
-.project.active {
+.project.activeProject {
     > li {
         color: var(--theme-color-light);
     }
