@@ -65,9 +65,9 @@ export function renderProjectList(projects) {
         newProject.innerHTML = project;
 
         const div = document.createElement('div');
-        const removeIcon = document.createElement('img');
+        const removeIcon = document.createElement('img');   
 
-        div.id = project + `-${idCounter}`;
+        project === "Archive" ? div.id = project + "-9999": div.id = project + `-${idCounter}`;
 
         div.classList.add("project");
 
@@ -85,14 +85,14 @@ export function renderProjectList(projects) {
 
         attachListeners(div);
 
-        if (idCounter < 2) {
+        if (!projectLists.firstElementChild.lastElementChild || 
+            projectLists.firstElementChild.lastElementChild.id.split("-")[0] !== "Archive") {
             projectLists.firstElementChild.appendChild(div);
+            idCounter++;
         }
         else {
             projectLists.firstElementChild.lastElementChild.before(div);
         }
-
-        idCounter++;
 
         if (!projectLists.classList.contains('show'))
             toggleHeader(projectHeader);
@@ -112,7 +112,9 @@ export function removeProject(event) {
 
     projectLists.firstElementChild.removeChild(toRemove);
     defaultProject.classList.add("activeProject");
-    renderTasks(defaultProject);
+    // Render the tasks of the active project
+
+    getTaskList(defaultProject);
 
     if (projectLists.firstElementChild.childElementCount === 0) {
         toggleHeader(projectLists.previousElementSibling);
@@ -268,5 +270,5 @@ export function toggleActiveProject(element) {
     });
 
     // Render the tasks of the active project
-    getTaskList(element)
+    getTaskList(element);
 }

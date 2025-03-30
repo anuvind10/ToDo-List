@@ -1,4 +1,4 @@
-import { toggleHeader, addToFavorites, removeFromFavorites, buildProjectList, toggleAddProjectModal } from "./display";
+import { toggleAddProjectModal } from "./display";
 import attachListeners from "./eventListeners"
 
 
@@ -13,5 +13,21 @@ export function addProject() {
 
     attachListeners(addProjectBtn);
     attachListeners(cancelBtn);
+}
+
+export function getProjectList() {
+    const projectName = document.querySelector("#project-name");
+    const projectLists = [...document.querySelector("#projects-list").firstElementChild.children];
+
+    let projects = [];
+
+    if (projectLists.length > 0) {
+        projectLists.forEach(project => {
+            projects.push(project.firstElementChild.innerHTML);
+        });
+    }
     
+    projects.push(projectName.value.trim());
+    
+    return projects;
 }

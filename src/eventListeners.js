@@ -1,6 +1,7 @@
 import * as updateDisplay from "./display";
 import * as tasks from "./tasks";
 import { addProject } from "./projects";
+import { getProjectList } from "./projects"
 
 export default function attachListeners(element = "") {
     const expandableHeaders = document.querySelectorAll(".expandable");
@@ -27,8 +28,7 @@ export default function attachListeners(element = "") {
             case element.id === "cancel-btn":
                 element.addEventListener("click", () => {
                     projectName.value = "";
-                    projectModal.classList.toggle('active');
-                    overlay.style.display = "none";
+                    updateDisplay.toggleAddProjectModal()
                 }, {once: true});
     
                 break;
@@ -45,14 +45,14 @@ export default function attachListeners(element = "") {
                 })
                 break;
 
-            case element.cc:
+            case element.classList.contains("project"):
                 element.addEventListener("click", (event) => {
                     updateDisplay.toggleActiveProject(event.target);
                 });
                 break;
 
             case element.classList.contains("remove-icon"):
-                removeIcon.addEventListener('click', (event) => {
+                element.addEventListener('click', (event) => {
                     updateDisplay.removeProject(event.target);
                     event.stopPropagation();
                 })
@@ -99,19 +99,3 @@ export default function attachListeners(element = "") {
     }
 }
 
-function getProjectList() {
-    const projectName = document.querySelector("#project-name");
-    const projectLists = [...document.querySelector("#projects-list").firstElementChild.children];
-
-    let projects = [];
-
-    if (projectLists.length > 0) {
-        projectLists.forEach(project => {
-            projects.push(project.firstElementChild.innerHTML);
-        });
-    }
-    
-    projects.push(projectName.value.trim());
-    
-    return projects;
-}
