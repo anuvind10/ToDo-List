@@ -13,6 +13,7 @@ export default function attachListeners(element = "") {
     
     if (!element == "") {
         switch (true) {
+            // handle adding new project
             case element.id === "add-project-btn":
                 element.addEventListener("click", () => {
                     let projects = getProjectList();
@@ -25,6 +26,7 @@ export default function attachListeners(element = "") {
     
                 break;
     
+            // handle canceling change
             case element.id === "cancel-btn":
                 element.addEventListener("click", () => {
                     projectName.value = "";
@@ -33,24 +35,28 @@ export default function attachListeners(element = "") {
     
                 break;
 
+            // handle adding new task
             case element.id === "img_div":
                 element.addEventListener("click", (event) => {
                     tasks.getTaskList(event.target);
                 })
                 break;
 
+            // handle completing task
             case element.classList.contains("taskCheckbox"):
                 element.addEventListener("click", (event) => {
                     tasks.updateTask(event.target);
                 })
                 break;
 
+            // handle toggling active projects
             case element.classList.contains("project"):
                 element.addEventListener("click", (event) => {
                     updateDisplay.toggleActiveProject(event.target);
                 });
                 break;
 
+            // handle removing project
             case element.classList.contains("remove-icon"):
                 element.addEventListener('click', (event) => {
                     updateDisplay.removeProject(event.target);
@@ -63,6 +69,7 @@ export default function attachListeners(element = "") {
         }        
     }
     else {
+        // handle buttons on pageload
         const defaultProject = document.querySelector("#Default-0");
         const archiveProject = document.querySelector("#Archive-9999");
 

@@ -75,6 +75,7 @@ export function renderProjectList(projects) {
         removeIcon.classList.add('remove-icon');
         removeIcon.src = remove_icon;
         
+        // Default and Archive projects should not be removeable
         div.appendChild(newProject);
         if (project != "Default" && project != "Archive") {
             div.appendChild(removeIcon);
@@ -85,6 +86,7 @@ export function renderProjectList(projects) {
 
         attachListeners(div);
 
+        // Bind the projects
         if (!projectLists.firstElementChild.lastElementChild || 
             projectLists.firstElementChild.lastElementChild.id.split("-")[0] !== "Archive") {
             projectLists.firstElementChild.appendChild(div);
@@ -148,7 +150,8 @@ export function renderTasks(tasks, trigger="newTask") {
     const addTask2 = document.querySelector("#img_div");
     const navListItems = document.querySelectorAll(".list-item");
     let activeProject;
-        
+    
+    // Bind the added task
     if (trigger === "newTask") {
         if (tasks.length !== 0) {
             taskList.innerHTML = "";
@@ -174,6 +177,7 @@ export function renderTasks(tasks, trigger="newTask") {
             taskList.classList.add("empty");
         }
     }
+    // Show only tasks of the active project
     else if (trigger.closest("li").id != "today" && trigger.closest("li").id != "thisWeek") {
         activeProject = trigger.closest(".project");
         let isEmpty = true;
@@ -206,6 +210,7 @@ export function renderTasks(tasks, trigger="newTask") {
             taskList.classList.remove("empty");
         }
     }
+    // Show only the tasks for the day or the week
     else if (trigger.closest("li").id=== "today" || trigger.closest("li").id === "thisWeek"){
         activeProject = document.querySelector(".activeProject");
         const dates = document.querySelectorAll("input[type=date]");

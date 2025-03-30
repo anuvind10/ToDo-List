@@ -1,6 +1,7 @@
 import { renderTasks,  } from "./display";
 import attachListeners from "./eventListeners";
 
+// Add a new task
 export default function addTask(tasks) {
     const currentProject = document.querySelector(".activeProject");
     const defaultProject = document.querySelector("#Default-0");
@@ -68,6 +69,7 @@ export default function addTask(tasks) {
     renderTasks(tasks);
 }
 
+// Gets the list of tasks
 export function getTaskList(trigger) {
     const taskList = document.querySelectorAll(".task");
     let tasks = [];
@@ -82,10 +84,12 @@ export function getTaskList(trigger) {
         addTask(tasks);
     }
     else {
+        // render the tasks
         renderTasks(tasks, trigger)
     }
 }
 
+// Updates the task
 export function updateTask(task) {
     const archive = document.querySelector("#Archive-9999");
     const activeProject = document.querySelector(".activeProject");
@@ -98,6 +102,6 @@ export function updateTask(task) {
         task.closest(".task").setAttribute("data-project", archive.id);
     }
 
-    // Render the tasks of the active project
+    // get the new task list and render it
     getTaskList(activeProject)
 }
