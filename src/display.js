@@ -12,6 +12,9 @@ import addTask_icon from "./images/add_task_icon.png";
 import addTask_icon2 from "./images/add_task_icon2.png";
 import attachListeners from "./eventListeners";
 
+import { getTaskList } from "./tasks";
+
+// Renders icons on page load
 export function renderIcons() {
     const elements = [
         { name: "today", icon: today_icon },
@@ -29,6 +32,7 @@ export function renderIcons() {
     });
 }
 
+// Expands or contracts Navbar headers
 export function toggleHeader(element) {
     let toggleElement;
 
@@ -47,7 +51,8 @@ export function toggleHeader(element) {
     }
 }
 
-export function buildProjectList(projects) {
+// Renders the projects
+export function renderProjectList(projects) {
     const projectLists = document.querySelector("#projects-list");
     const projectHeader = document.querySelector("#projects-dropdown-btn");
 
@@ -92,13 +97,11 @@ export function buildProjectList(projects) {
         if (!projectLists.classList.contains('show'))
             toggleHeader(projectHeader);
 
-        removeIcon.addEventListener('click', (event) => {
-            removeProject(event.target);
-            event.stopPropagation();
-        })
+        attachListeners(removeIcon);
     });
 }
 
+// Removes project
 export function removeProject(event) {
     const defaultProject = document.querySelector("#Default-0");
     const projectLists = document.querySelector("#projects-list");
@@ -128,6 +131,7 @@ export function removeProject(event) {
     });
 }
 
+// Open the add new project page
 export function toggleAddProjectModal() {
     const projectModal = document.querySelector("#projectModal");
 
@@ -135,148 +139,72 @@ export function toggleAddProjectModal() {
     overlay.classList.toggle("active");
 }
 
-export function addTask(tasks) {
-    const currentProject = document.querySelector(".activeProject");
-    const defaultProject = document.querySelector("#Default-0");
-
-    const priorityListValues = ["Low", "Medium", "High"];
-
+//
+export function renderTasks(tasks, trigger="newTask") {
     const taskList = document.querySelector("#task-list");
-    taskList.classList.remove("empty");
-    taskList.innerHTML = "";
-
-    tasks.forEach(task => {
-        if (task.id === "empty-task-list")
-            task.style.display = "none";
-        
-        taskList.appendChild(task);
-    });
-
-    const task = document.createElement("div");
-    task.classList.add("task");
-
-    const title = document.createElement("input");
-    const dueDate = document.createElement("input");
-    const dueDateLabel = document.createElement("label");
-    const priorityLabel = document.createElement("label");
-    const priorityList = document.createElement("select");
-    const checkbox = document.createElement("input");
-
-    title.type = "text";
-    title.classList.add("taskTitle");
-    title.placeholder = "Title";
-
-    const dueDateDiv = document.createElement("div");
-    dueDateLabel.for = "dueDate";
-    dueDateLabel.innerHTML = "Due Date: ";
-
-    dueDate.name = "dueDate";
-    dueDate.type = "date";
-    dueDate.value = new Date().toISOString().split("T")[0]
-    dueDate.classList.add("taskDueDate");
-
-    dueDateDiv.appendChild(dueDateLabel);
-    dueDateDiv.appendChild(dueDate);
-
-    const priorityDiv = document.createElement("div");
-    priorityLabel.for = "priority";
-    priorityLabel.innerHTML = "Priority: ";
-    priorityList.name = "priority";
-    priorityList.classList.add("taskPriority");
-
-    priorityListValues.forEach(priority => {
-        const option = document.createElement("option");
-        option.value = priority;
-        option.innerHTML = priority;
-        priorityList.appendChild(option);
-    });
-
-    priorityDiv.appendChild(priorityLabel);
-    priorityDiv.appendChild(priorityList);
-
-    checkbox.type = "checkbox";
-    checkbox.classList.add("taskCheckbox");
-
-    let div = document.createElement("div");
-    div.appendChild(dueDateDiv);
-    div.appendChild(priorityDiv);
-    div.appendChild(checkbox);
-
-    task.appendChild(title);
-    task.appendChild(div);
-
-    currentProject ? task.setAttribute("data-project", currentProject.id) : task.setAttribute("data-project", defaultProject.id);
-
-    div = document.createElement("div");
-    const addTaskIcon = document.createElement("img");
-    addTaskIcon.src = addTask_icon2
-    addTaskIcon.id = "add-task-icon2"
-
-    div.id = "img_div"
-    div.appendChild(addTaskIcon)
-
-    taskList.appendChild(task);
-    taskList.appendChild(div);
-
-    attachListeners(div);
-    attachListeners(checkbox);
-}
-
-export function toggleActiveProject(element) {
-    const projectList = document.querySelectorAll(".project");
-    const listItem = document.querySelectorAll(".list-item");
-
-    projectList.forEach(project => {
-        if (project.classList.contains("activeProject"))
-            project.classList.toggle("activeProject");
-    });
-
-    const activeProject = element.id == "" ? element.parentElement : element;
-    activeProject.classList.toggle("activeProject");
-
-    listItem.forEach(item => {
-        if (item.classList.contains("active")) {
-            item.classList.remove("active");
-        }
-    });
-
-    renderTasks(activeProject);
-}
-
-export function renderTasks(trigger) {
-    const tasks = document.querySelectorAll(".task");
     const emptyTaskList = document.querySelector("#empty-task-list");
     const addTask2 = document.querySelector("#img_div");
-    const taskList = document.querySelector("#task-list");
     const navListItems = document.querySelectorAll(".list-item");
     let activeProject;
+        
+    if (trigger === "newTask") {
+        if (tasks.length !== 0) {
+            taskList.innerHTML = "";
+            taskList.classList.remove("empty");
+            const div = document.createElement("div");
+            const addTaskIcon = document.createElement("img");
+            addTaskIcon.src = addTask_icon2;
+            addTaskIcon.id = "add-task-icon2";
+    
+            div.id = "img_div";
+            div.appendChild(addTaskIcon);
+    
+            attachListeners(div);
+            tasks.push(div);
+            tasks.forEach(task => {
+                taskList.appendChild(task);
+            });
 
-    if (trigger.closest("li").id != "today" && trigger.closest("li").id != "thisWeek" ) {
-        activeProject = trigger;
+            emptyTaskList.style.display = "none";
+            taskList.appendChild(emptyTaskList);
+        }
+        else{ 
+            taskList.classList.add("empty");
+        }
+    }
+    else if (trigger.closest("li").id != "today" && trigger.closest("li").id != "thisWeek") {
+        activeProject = trigger.closest(".project");
+        let isEmpty = true;
+
         tasks.forEach(task => {
-            if (task.getAttribute("data-project") !== trigger.id) {
-                task.style.display = "none";
-            }
-            else {
+            if (task.getAttribute("data-project") === activeProject.id) {
                 task.style.display = "flex";
             }
+            else {
+                task.style.display = "none";
+            }
         });
-    
-        const activeProjectTasks = document.querySelectorAll(`[data-project="${trigger.id}"]`);
-    
-        if (activeProjectTasks.length === 0) {
+
+        tasks.forEach(task => {
+            if (task.getAttribute("data-project") === activeProject.id) {
+                isEmpty = false;
+            }
+        });
+
+        if (isEmpty) {
             emptyTaskList.style.display = "flex";
-            taskList.classList.add("empty");
-            if (addTask2)
+            if (addTask2) 
                 addTask2.style.display = "none";
+            taskList.classList.add("empty");
         }
         else {
             emptyTaskList.style.display = "none";
-            addTask2.style.display = "flex";
+            if (addTask2) 
+                addTask2.style.display = "flex";
             taskList.classList.remove("empty");
-        }   
+        }
     }
-    else {
+    else if (trigger.closest("li").id=== "today" || trigger.closest("li").id === "thisWeek"){
         activeProject = document.querySelector(".activeProject");
         const dates = document.querySelectorAll("input[type=date]");
         const today = new Date();
@@ -320,17 +248,25 @@ export function renderTasks(trigger) {
     }
 }
 
-export function updateTask(task) {
-    const archive = document.querySelector("#Archive-9999");
-    const activeProject = document.querySelector(".activeProject");
-    const defaultProject = document.querySelector("#Default-0");
+// Toggles between active projects
+export function toggleActiveProject(element) {
+    const projectList = document.querySelectorAll(".project");
+    const listItem = document.querySelectorAll(".list-item");
 
-    if (!task.checked) {
-        task.closest(".task").setAttribute("data-project", defaultProject.id);
-    }
-    else {
-        task.closest(".task").setAttribute("data-project", archive.id);
-    }
+    projectList.forEach(project => {
+        if (project.classList.contains("activeProject"))
+            project.classList.toggle("activeProject");
+    });
 
-    renderTasks(activeProject);
+    const activeProject = element.id == "" ? element.parentElement : element;
+    activeProject.classList.toggle("activeProject");
+
+    listItem.forEach(item => {
+        if (item.classList.contains("active")) {
+            item.classList.remove("active");
+        }
+    });
+
+    // Render the tasks of the active project
+    getTaskList(element)
 }

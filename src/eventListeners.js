@@ -1,4 +1,5 @@
 import * as updateDisplay from "./display";
+import * as tasks from "./tasks";
 import { addProject } from "./projects";
 
 export default function attachListeners(element = "") {
@@ -15,7 +16,7 @@ export default function attachListeners(element = "") {
                 element.addEventListener("click", () => {
                     let projects = getProjectList();
             
-                    updateDisplay.buildProjectList(projects)
+                    updateDisplay.renderProjectList(projects)
                     projectName.value = "";
             
                     updateDisplay.toggleAddProjectModal()
@@ -33,19 +34,28 @@ export default function attachListeners(element = "") {
                 break;
 
             case element.id === "img_div":
-                element.addEventListener("click", createNewTask)
+                element.addEventListener("click", (event) => {
+                    tasks.getTaskList(event.target);
+                })
                 break;
 
             case element.classList.contains("taskCheckbox"):
                 element.addEventListener("click", (event) => {
-                    updateDisplay.updateTask(event.target);
+                    tasks.updateTask(event.target);
                 })
                 break;
 
-            case element.classList.contains("project"):
+            case element.cc:
                 element.addEventListener("click", (event) => {
                     updateDisplay.toggleActiveProject(event.target);
                 });
+                break;
+
+            case element.classList.contains("remove-icon"):
+                removeIcon.addEventListener('click', (event) => {
+                    updateDisplay.removeProject(event.target);
+                    event.stopPropagation();
+                })
                 break;
 
             default:
@@ -67,14 +77,16 @@ export default function attachListeners(element = "") {
             event.stopPropagation();
         })
 
-        addTaskBtn.addEventListener("click", createNewTask);
+        addTaskBtn.addEventListener("click", (event) => {
+            tasks.getTaskList(event.target);
+        });
         
         today.addEventListener("click", (event) => {
-            updateDisplay.renderTasks(event.target);
+            tasks.getTaskList(event.target)
         })
 
         thisWeek.addEventListener("click", (event) => {
-            updateDisplay.renderTasks(event.target);
+            tasks.getTaskList(event.target)
         })
 
         defaultProject.addEventListener("click", (event) => {
@@ -85,20 +97,6 @@ export default function attachListeners(element = "") {
             updateDisplay.toggleActiveProject(event.target);
         })
     }
-}
-
-function createNewTask() {
-    const taskList = [...document.querySelector("#task-list").children];
-    let tasks = [];
-            
-    if (taskList.length > 0) {
-        taskList.forEach(task => {
-            if (task.id != "img_div") {
-                tasks.push(task);
-            }
-        });
-    }
-    updateDisplay.addTask(tasks);
 }
 
 function getProjectList() {
